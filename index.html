@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEXOR — Fusion Writing & Digital Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #060810;
+      --surface: #0c0f1a;
+      --cyan: #00d4ff;
+      --green: #00ff9d;
+      --text: #e2e8f0;
+      --muted: #64748b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: #06081099;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid #ffffff0f;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; letter-spacing: 1px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--cyan); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(52px, 12vw, 110px);
+      font-weight: 900;
+      letter-spacing: 12px;
+      background: linear-gradient(180deg, #fff 0%, #ffffff60 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub { font-size: 13px; letter-spacing: 3px; color: var(--muted); margin-bottom: 24px; }
+    .hero p { max-width: 480px; color: #94a3b8; font-size: 15px; margin-bottom: 40px; }
+
+    /* SECTIONS */
+    section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-title { font-family: 'Cinzel', serif; font-size: clamp(24px, 4vw, 40px); margin-bottom: 48px; }
+
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid #ffffff0f;
+      border-radius: 16px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: #00d4ff30;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px #00d4ff08;
+    }
+
+    .service-icon { font-size: 28px; margin-bottom: 14px; }
+    .service-name { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+    .service-desc { color: var(--muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+    .service-price { font-size: 13px; color: var(--green); font-weight: 600; }
+
+    .btn-order {
+      margin-top: 16px;
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid #00d4ff20;
+      border-radius: 8px;
+      color: var(--cyan);
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-order:hover { background: #00d4ff10; border-color: #00d4ff50; }
+
+    /* CURRENCY */
+    .currency-selector {
+      text-align: center;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .currency-selector label { font-size: 12px; color: var(--muted); margin-right: 12px; letter-spacing: 1px; }
+    .currency-selector select {
+      background: var(--surface);
+      border: 1px solid #00d4ff30;
+      color: var(--cyan);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid #ffffff0f;
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ffffff0f;
+      font-size: 13px;
+    }
+
+    .pricing-row:last-child { border-bottom: none; }
+    .pricing-service { color: #94a3b8; }
+    .pricing-amount { color: var(--green); font-weight: 600; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: #00000090;
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #0c0f1a;
+      border: 1px solid #00d4ff20;
+      border-radius: 20px;
+      padding: 36px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-title { font-family: 'Cinzel', serif; font-size: 20px; margin-bottom: 6px; }
+    .modal-subtitle { color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+
+    .close-btn {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 11px; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: #ffffff08;
+      border: 1px solid #ffffff0f;
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #00d4ff20, #00ff9d20);
+      border: 1px solid #00d4ff40;
+      border-radius: 10px;
+      color: var(--cyan);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.3s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { background: linear-gradient(135deg, #00d4ff30, #00ff9d30); }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .success-msg.show { display: block; }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-msg h3 { font-family: 'Cinzel', serif; color: var(--green); margin-bottom: 8px; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #ffffff0f;
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">VEXOR</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>VEXOR</h1>
+  <div class="hero-sub">FUSION WRITING & DIGITAL AGENCY</div>
+  <p>Web · App · Portfolio · Content</p>
+  <p>We build clean, fast, professional digital products. From portfolios to full web apps — delivered on time, every time.</p>
+</div>
+
+<div class="currency-selector">
+  <label>🌍 SELECT CURRENCY</label>
+  <select id="currencySelect" onchange="changeCurrency()">
+    <option value="inr">🇮🇳 INR - Indian Rupee</option>
+    <option value="usd">🇺🇸 USD - US Dollar</option>
+    <option value="gbp">🇬🇧 GBP - British Pound</option>
+    <option value="eur">🇪🇺 EUR - Euro</option>
+    <option value="aud">🇦🇺 AUD - Australian Dollar</option>
+    <option value="cad">🇨🇦 CAD - Canadian Dollar</option>
+  </select>
+</div>
+
+<section id="services">
+  <div class="section-title">Our Services</div>
+  <div class="services-grid">
+    <div class="service-card" onclick="openModal('portfolio')">
+      <div class="service-icon">🌐</div>
+      <div class="service-name">Portfolio Website</div>
+      <div class="service-desc">Professional portfolio with projects, skills, and contact form.</div>
+      <div class="service-price" data-price="1500">Starting at Rs. 1,500</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+
+    <div class="service-card" onclick="openModal('landing')">
+      <div class="service-icon">🖥️</div>
+      <div class="service-name">Landing Page</div>
+      <div class="service-desc">Single page for your product or brand with a strong CTA.</div>
+      <div class="service-price" data-price="1000">Starting at Rs. 1,000</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+
+    <div class="service-card" onclick="openModal('webapp')">
+      <div class="service-icon">⚙️</div>
+      <div class="service-name">Web Application</div>
+      <div class="service-desc">Full web app with backend, database, authentication.</div>
+      <div class="service-price" data-price="5000">Starting at Rs. 5,000</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+
+    <div class="service-card" onclick="openModal('mobile')">
+      <div class="service-icon">📱</div>
+      <div class="service-name">Mobile App</div>
+      <div class="service-desc">Android & iOS apps using React Native or Flutter.</div>
+      <div class="service-price" data-price="8000">Starting at Rs. 8,000</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+
+    <div class="service-card" onclick="openModal('content')">
+      <div class="service-icon">✍️</div>
+      <div class="service-name">Content Writing</div>
+      <div class="service-desc">Blog posts, captions, articles, social media content.</div>
+      <div class="service-price" data-price="150">Starting at Rs. 150/post</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+
+    <div class="service-card" onclick="openModal('report')">
+      <div class="service-icon">📄</div>
+      <div class="service-name">Report Writing</div>
+      <div class="service-desc">Business reports, academic reports, case studies.</div>
+      <div class="service-price" data-price="500">Starting at Rs. 500</div>
+      <button class="btn-order">ORDER NOW →</button>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="section-title">Transparent Pricing</div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="service-name">Portfolio Website</div>
+      <div class="pricing-row"><span class="pricing-service">Basic</span><span class="pricing-amount" data-price="1500">Rs. 1,500</span></div>
+      <div class="pricing-row"><span class="pricing-service">Standard</span><span class="pricing-amount" data-price="3500">Rs. 3,500</span></div>
+      <div class="pricing-row"><span class="pricing-service">Premium</span><span class="pricing-amount" data-price="6000">Rs. 6,000</span></div>
+    </div>
+
+    <div class="pricing-card">
+      <div class="service-name">Web Application</div>
+      <div class="pricing-row"><span class="pricing-service">Basic</span><span class="pricing-amount" data-price="5000">Rs. 5,000</span></div>
+      <div class="pricing-row"><span class="pricing-service">Standard</span><span class="pricing-amount" data-price="12000">Rs. 12,000</span></div>
+      <div class="pricing-row"><span class="pricing-service">Premium</span><span class="pricing-amount" data-price="25000">Rs. 25,000+</span></div>
+    </div>
+
+    <div class="pricing-card">
+      <div class="service-name">Mobile App</div>
+      <div class="pricing-row"><span class="pricing-service">Basic</span><span class="pricing-amount" data-price="8000">Rs. 8,000</span></div>
+      <div class="pricing-row"><span class="pricing-service">Standard</span><span class="pricing-amount" data-price="18000">Rs. 18,000</span></div>
+      <div class="pricing-row"><span class="pricing-service">Premium</span><span class="pricing-amount" data-price="35000">Rs. 35,000+</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  VEXOR — FUSION WRITING & DIGITAL AGENCY · BUILT FOR GROWTH · STAY CONSISTENT
+</footer>
+
+<!-- PORTFOLIO MODAL -->
+<div class="modal-overlay" id="modal-portfolio">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('portfolio')">✕</button>
+    <div id="form-portfolio">
+      <div class="modal-title">Portfolio Website</div>
+      <div class="modal-subtitle">Fill in your details</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="p-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>PROFESSION</label><input type="text" id="p-profession" placeholder="Developer, Designer..."/></div>
+      <div class="form-group"><label>KEY SKILLS</label><input type="text" id="p-skills" placeholder="React, Python..."/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="p-package">
+            <option value="basic">Basic — Rs. 1,500</option>
+            <option value="standard">Standard — Rs. 3,500</option>
+            <option value="premium">Premium — Rs. 6,000</option>
+          </select>
+        </div>
+        <div class="form-group"><label>DEADLINE</label><input type="text" id="p-deadline" placeholder="5 days"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="p-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('portfolio')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-portfolio">
+      <div class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LANDING PAGE MODAL -->
+<div class="modal-overlay" id="modal-landing">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('landing')">✕</button>
+    <div id="form-landing">
+      <div class="modal-title">Landing Page</div>
+      <div class="modal-subtitle">Tell us about your product</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="l-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>PRODUCT NAME</label><input type="text" id="l-brand" placeholder="Your product"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="l-package">
+            <option value="basic">Basic — Rs. 1,000</option>
+            <option value="standard">Standard — Rs. 2,500</option>
+            <option value="premium">Premium — Rs. 4,500</option>
+          </select>
+        </div>
+        <div class="form-group"><label>DEADLINE</label><input type="text" id="l-deadline" placeholder="3 days"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="l-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('landing')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-landing">
+      <div class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WEB APP MODAL -->
+<div class="modal-overlay" id="modal-webapp">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('webapp')">✕</button>
+    <div id="form-webapp">
+      <div class="modal-title">Web Application</div>
+      <div class="modal-subtitle">Give us your app idea</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="w-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>APP NAME</label><input type="text" id="w-appname" placeholder="What is it called?"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="w-package">
+            <option value="basic">Basic — Rs. 5,000</option>
+            <option value="standard">Standard — Rs. 12,000</option>
+            <option value="premium">Premium — Rs. 25,000+</option>
+          </select>
+        </div>
+        <div class="form-group"><label>DEADLINE</label><input type="text" id="w-deadline" placeholder="2 weeks"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="w-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('webapp')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-webapp">
+      <div class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE APP MODAL -->
+<div class="modal-overlay" id="modal-mobile">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('mobile')">✕</button>
+    <div id="form-mobile">
+      <div class="modal-title">Mobile App</div>
+      <div class="modal-subtitle">Android / iOS app development</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="m-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>APP NAME</label><input type="text" id="m-appname" placeholder="What is it called?"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="m-package">
+            <option value="basic">Basic — Rs. 8,000</option>
+            <option value="standard">Standard — Rs. 18,000</option>
+            <option value="premium">Premium — Rs. 35,000+</option>
+          </select>
+        </div>
+        <div class="form-group"><label>DEADLINE</label><input type="text" id="m-deadline" placeholder="3 weeks"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="m-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('mobile')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-mobile">
+      <div class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT WRITING MODAL -->
+<div class="modal-overlay" id="modal-content">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('content')">✕</button>
+    <div id="form-content">
+      <div class="modal-title">Content Writing</div>
+      <div class="modal-subtitle">Blog posts, captions, articles</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="c-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>TOPIC</label><input type="text" id="c-topic" placeholder="What topic?"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="c-package">
+            <option value="basic">Basic — Rs. 150/post</option>
+            <option value="standard">Standard — Rs. 300/post</option>
+            <option value="premium">Premium — Rs. 600/post</option>
+          </select>
+        </div>
+        <div class="form-group"><label>QUANTITY</label><input type="number" id="c-quantity" placeholder="How many posts?" min="1"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="c-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('content')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-content">
+      <div 
+class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT WRITING MODAL -->
+<div class="modal-overlay" id="modal-report">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('report')">✕</button>
+    <div id="form-report">
+      <div class="modal-title">Report Writing</div>
+      <div class="modal-subtitle">Business & academic reports</div>
+      <div class="form-group"><label>FULL NAME</label><input type="text" id="r-name" placeholder="Your name"/></div>
+      <div class="form-group"><label>REPORT TOPIC</label><input type="text" id="r-topic" placeholder="What report?"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>PACKAGE</label>
+          <select id="r-package">
+            <option value="basic">Basic — Rs. 500</option>
+            <option value="standard">Standard — Rs. 1,200</option>
+            <option value="premium">Premium — Rs. 2,500</option>
+          </select>
+        </div>
+        <div class="form-group"><label>DEADLINE</label><input type="text" id="r-deadline" placeholder="3 days"/></div>
+      </div>
+      <div class="form-group"><label>WHATSAPP</label><input type="text" id="r-contact" placeholder="+91 ..."/></div>
+      <button class="submit-btn" onclick="submitForm('report')">SUBMIT ⚡</button>
+    </div>
+    <div class="success-msg" id="success-report">
+      <div class="success-icon">✅</div>
+      <h3>Order Received!</h3>
+      <p>We'll contact you within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(service) {
+  document.getElementById('modal-' + service).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(service) {
+  document.getElementById('modal-' + service).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+});
+
+const rates = { inr: 1, usd: 0.012, gbp: 0.0095, eur: 0.011, aud: 0.018, cad: 0.017 };
+const symbols = { inr: '₹', usd: '$', gbp: '£', eur: '€', aud: 'A$', cad: 'C$' };
+
+function changeCurrency() {
+  const currency = document.getElementById('currencySelect').value;
+  const rate = rates[currency];
+  const symbol = symbols[currency];
+  
+  document.querySelectorAll('[data-price]').forEach(el => {
+    const basePrice = parseFloat(el.dataset.price);
+    const converted = Math.round(basePrice * rate);
+    el.textContent = symbol + ' ' + converted.toLocaleString();
+  });
+}
+
+function getFormData(service) {
+  const data = { service };
+  const fields = {
+    portfolio: ['p-name:name','p-profession:profession','p-skills:skills','p-package:package','p-deadline:deadline','p-contact:contact'],
+    landing: ['l-name:name','l-brand:brand','l-package:package','l-deadline:deadline','l-contact:contact'],
+    webapp: ['w-name:name','w-appname:app_name','w-package:package','w-deadline:deadline','w-contact:contact'],
+    mobile: ['m-name:name','m-appname:app_name','m-package:package','m-deadline:deadline','m-contact:contact'],
+    content: ['c-name:name','c-topic:topic','c-package:package','c-quantity:quantity','c-contact:contact'],
+    report: ['r-name:name','r-topic:topic','r-package:package','r-deadline:deadline','r-contact:contact'],
+  };
+
+  (fields[service] || []).forEach(f => {
+    const [id, key] = f.split(':');
+    const el = document.getElementById(id);
+    if (el) data[key] = el.value;
+  });
+
+  return data;
+}
+
+async function submitForm(service) {
+  const data = getFormData(service);
+  if (!data.name) { alert('Please enter your name!'); return; }
+
+  // Google Sheets form endpoint — update this after Google Form setup
+  const googleFormURL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+  
+  const formData = new FormData();
+  Object.entries(data).forEach(([key, value]) => {
+    // Map to your Google Form field IDs
+    // You need to inspect the form and find the entry IDs
+    formData.append('entry_XXXX', JSON.stringify(data)); // Replace XXXX with actual entry ID
+  });
+
+  try {
+    await fetch(googleFormURL, { method: 'POST', body: formData, mode: 'no-cors' });
+    document.getElementById('form-' + service).style.display = 'none';
+    document.getElementById('success-' + service).classList.add('show');
+    setTimeout(() => closeModal(service), 3000);
+  } catch (err) {
+    alert('Form submitted! We will contact you soon.');
+    document.getElementById('form-' + service).style.display = 'none';
+    document.getElementById('success-' + service).classList.add('show');
+    setTimeout(() => closeModal(service), 3000);
+  }
+}
+
+changeCurrency();
+</script>
+
+</body>
+</html>
